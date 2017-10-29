@@ -52,7 +52,7 @@ whose value is taken from the input element with that name.
 var updateStateValue(formState, inputName){
   var stateCopy = Object.assign({}, formState);
   stateCopy[inputName] = getValue(inputName);
-  console.log(stateCopy);
+  return stateCopy;
 
 }
 
@@ -62,17 +62,11 @@ Write a function which takes an object,`formState`, and an array of string,
 input with name in `inputNames` array.
 */
 var updateStateValues(formState, inputNames){
-  var stateToAdd = inputNames.reduce(function(acc, inputName){
-    acc[inputName] = getValue(inputName);
-    return acc;
-  },{});
-  var stateCopy = Object.keys(formState).reduce(function(accumulator, key){
-    accumulator[key] = formState[key];
-  },{});
-  var newState = Object.keys(stateToAdd).reduce(function(accumulator, key){
-    accumulator[key] = formState[key];
-  },stateCopy);
-  return newState;
+  var updateStateValues = function(formState, inputNames){
+  var stateCopy = Object.assign({}, formState);
+  inputNames.forEach(function(inputName){stateCopy[inputName] = getValue(inputName)})
+  return stateCopy;
+}
 };
 
 /*
