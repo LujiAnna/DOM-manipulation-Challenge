@@ -49,13 +49,13 @@ Write a function which takes an object,`formState`, and a string, `inputName`,
 and returns a copy of the object, but with an `inputName` key on the object
 whose value is taken from the input element with that name.
 */
-var updateStateValue(formState, inputName){
-  // return Object.assign({}, formState, {inputName: getValue(inputName)});
+var updateStateValue = function(formState, inputName){
   var stateCopy = Object.keys(formState).reduce(function(accumulator, key){
     accumulator[key] = formState[key];
-  },{});
+    return accumulator;
+  }, {});
   stateCopy[inputName] = getValue(inputName);
-
+  return stateCopy;
 }
 
 /*
@@ -63,26 +63,23 @@ Write a function which takes an object,`formState`, and an array of string,
 `inputNames`, and returns a copy of the object, which stores the values of each
 input with name in `inputNames` array.
 */
-var updateStateValues(formState, inputNames){
-  var stateToAdd = inputNames.reduce(function(acc, inputName){
-    acc[inputName] = getValue(inputName);
-    return acc;
-  },{});
+
+var updateStateValues = function(formState, inputNames){
   var stateCopy = Object.keys(formState).reduce(function(accumulator, key){
     accumulator[key] = formState[key];
-  },{});
-  var newState = Object.keys(stateToAdd).reduce(function(accumulator, key){
-    accumulator[key] = formState[key];
-  },stateCopy);
-  return newState;
+    return accumulator;
+  }, {});
+  inputNames.forEach(function(inputName){stateCopy[inputName] = getValue(inputName)})
+  return stateCopy;
+}
 };
 
 /*
 Write a function which returns an **array** of values of all input elements
 with a given class
 */
-var getInputValues(className){
-  Array.prototype.slice.call(document.querySelectorAll("input."className));
+var getInputValues = function(className){
+  return Array.from(document.querySelectorAll("input."+className+"")).map(function(element){return element.value});
 };
 
 /*
