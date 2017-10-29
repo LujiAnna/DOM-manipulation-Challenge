@@ -74,7 +74,7 @@ Write a function which returns an **array** of values of all input elements
 with a given class
 */
 var getInputValues(className){
-  Array.prototype.slice.call(document.querySelectorAll("input."className));
+  return Array.from(document.querySelectorAll("input."+className+"")).map(function(element){return element.value});
 };
 
 /*
