@@ -50,11 +50,9 @@ and returns a copy of the object, but with an `inputName` key on the object
 whose value is taken from the input element with that name.
 */
 var updateStateValue(formState, inputName){
-  // return Object.assign({}, formState, {inputName: getValue(inputName)});
-  var stateCopy = Object.keys(formState).reduce(function(accumulator, key){
-    accumulator[key] = formState[key];
-  },{});
+  var stateCopy = Object.assign({}, formState);
   stateCopy[inputName] = getValue(inputName);
+  console.log(stateCopy);
 
 }
 
