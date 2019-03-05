@@ -33,7 +33,7 @@ You can access DOM elements with javascript.
   Lorem ipsum...
 </article>
 <script>
-  var featuredArticleElement = document.getElementById(#featured-article);
+  var featuredArticleElement = document.getElementById("featured-article");
   // <article id="featured-article">...</article>
 </script>
 ```
