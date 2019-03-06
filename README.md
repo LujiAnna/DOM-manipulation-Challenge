@@ -5,13 +5,17 @@ Introduction to DOM manipulation
 
 1. Clone this repo.
 
-2. Open exercise/exercise.js and follow the instructions.
+2. Open `exercise/exercise.js` and follow the instructions.
 
 ## What is the DOM?
 
-The DOM is the _Document Object Model_, it is the browser's interpretation of the page once it has been [_parsed_](https://developer.mozilla.org/en-US/docs/Glossary/Parse).
+The DOM is the _Document Object Model_. It is the browser's interpretation of the page once it has been [_parsed_](https://developer.mozilla.org/en-US/docs/Glossary/Parse).
+
+It's something implemented by web browsers rather than provided by the JavaScript language itself.
 
 ## DOM elements
+
+An _element_ is the JavaScript representation of something on the page.
 
 In your browser, if you _right-click_ on a page, you see _inspect element_.
 
@@ -21,7 +25,7 @@ In the image below, `article` is a DOM element.
 
 ![article DOM element](./assets/article-element.png)
 
-Any html elements you write will be DOM elements in the browser, for example: `div`, `span`, `input`, `section`, etc etc.
+Any HTML elements you write will be DOM elements in the browser, for example: `div`, `span`, `input`, `section`, etc.
 
 ## Accessing DOM elements using Javascript
 
@@ -38,45 +42,52 @@ You can access DOM elements with javascript.
 </script>
 ```
 
-`document.getElementsByClassName("myClass")` returns an [_array-like object_](http://www.nfriedly.com/techblog/2009/06/advanced-javascript-objects-arrays-and-array-like-objects/) of all elements with the class "myClass";
+`document.getElementsByClassName("myClass")` returns a live [HTML Collection](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCollection) of all elements with the class "myClass";
 
 ```html
-<li class="menu-item">
-  London
+<li class="menu-item">London
 </li>
-<li class="menu-item">
-  Nazareth
-</li>
+<li class="menu-item">Nazareth</li>
 <script>
   var menuItems = document.getElementsByClassName("menu-item");
-  // [_li.menu-item_,_li.menu-item_]
+  // [li.menu-item, li.menu-item]
 </script>
 ```
 
-`document.querySelector(myCssSelector)` returns the first element matching `myCssSelector`, where `myCssSelector` takes the form of a [CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) for example "#myId", ".myClass", "myTag", etc etc.
+It's important to note that this collection is _live_. If you change one of the elements within it, then try to access the collection again it will be updated. This is different to how most function return values work, so be careful.
+
+`document.querySelector(myCssSelector)` returns the first element matching `myCssSelector`, where `myCssSelector` is any valid [CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors). For example "#myId", ".myClass", "myTag", etc etc.
+
+```js
+document.querySelector("#myId"); // logs first element with ID of "myId"
+document.querySelector(".myClass"); // logs first element with class name of "myClass"
+document.querySelector("p > a.active"); // logs first anchor element with class name of "active" that is within a paragraph
+```
+
+`document.querySelectorAll(myCssSelector)` returns a static [NodeList](https://developer.mozilla.org/en-US/docs/Web/API/NodeList) of all elements matching myCssSelector.
+
 ```html
-<li class="menu-item">
-  London
-</li>
-<li class="menu-item">
-  Nazareth
-</li>
+<button id="btn-1">Sign up</button>
+<button id="btn-2">Sign in</button>
 <script>
-  var firstMenuItem = document.querySelector(".menu-item");
-  // <li class="menu-item">London</li>
+  var buttons = document.querySelectorAll("button");
+  // [button#btn-1, button#btn-2];
 </script>
 ```
-`document.querySelectorAll(myCssSelector)` returns an _array-like object_ of all elements matching myCssSelector.
+It's important to note that this NodeList is _not_ live. Whatever `querySelectorAll` returns will stay the same even if the underlying elements later change. Think of it as a snapshot of the DOM at the time you ran the function.
+
+NodeLists are similar to arrays, but with fewer properties. For example they have a `.forEach()` method, but no `.map()` or `.filter()`. If you need to do more complex operations you can turn them into arrays using `Array.from(myNodeList)`.
+
 ```html
-<li class="menu-item">
-  London
-</li>
-<li class="menu-item">
-  Nazareth
-</li>
+<button id="btn-1">Sign up</button>
+<button id="btn-2">Sign in</button>
 <script>
-  var firstMenuItem = document.querySelectorAll(".menu-item");
-  // [_li.menu-item_,_li.menu-item_];
+  var buttons = document.querySelectorAll("button");
+  buttons.forEach(button => {
+    console.log(button);
+  }
+  // <button id="btn-1">Sign up</button>
+  // <button id="btn-2">Sign in</button>
 </script>
 ```
 
@@ -85,11 +96,13 @@ You can access DOM elements with javascript.
 We can access _properties_ of DOM elements using javscript.
 
 ```html
-<section id="featured-section" class="highlight">
+<section id="featured-section" class="highlight large">
   <p>Lorem ipsum...</p>
 </section>
 <script>
-  document.querySelector("#featured-section").className; // "featured-section highlight"
+  var section = document.querySelector("#featured-section");
+  var id = section.id; // "featured-section"
+  var className = section.className; // "highlight large"
 </script>
 ```
 
