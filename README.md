@@ -17,7 +17,7 @@ It's something implemented by web browsers rather than provided by the JavaScrip
 
 An _element_ is the JavaScript representation of something on the page.
 
-In your browser, if you _right-click_ on a page, you see _inspect element_.
+If you right click on a page you should see an "Inspect" option.
 
 ![inpect element](./assets/inspect-element.png)
 
