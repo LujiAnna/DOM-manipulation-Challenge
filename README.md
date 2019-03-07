@@ -85,7 +85,7 @@ NodeLists are similar to arrays, but with fewer properties. For example they hav
   var buttons = document.querySelectorAll("button");
   buttons.forEach(button => {
     console.log(button);
-  }
+  });
   // <button id="btn-1">Sign up</button>
   // <button id="btn-2">Sign in</button>
 </script>
